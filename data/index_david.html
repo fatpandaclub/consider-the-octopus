@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>!!</title>
+		<script>
+		currentTab = "";
+		function changeTab(name, words, lines) {
+			document.getElementById("name").innerHTML = name;
+			document.getElementById("words").innerHTML = words;
+			document.getElementById("lines").innerHTML = lines;
+		}
+		function requestTab() {
+			currentTab = this.textContent;
+			app.getTab(currentTab);
+		}
+		function addListItem(index, name) {
+		    var lItem = document.createElement("li");
+			lItem.id = name;
+		    var aItem = document.createElement("a");
+		    var text = document.createTextNode(name);
+		    aItem.appendChild(text);
+		    aItem.title = index;
+		    aItem.href = '#';
+			aItem.onclick = requestTab;
+		    lItem.appendChild(aItem);
+		    var list = document.getElementById('tabs');
+			if(list.childNodes.length > index) {
+				list.insertBefore(lItem, list.childNodes[index]);
+				//list.removeChild(list.childNodes[index+1]);
+			} else {
+				list.appendChild(lItem);
+			}
+			updateTab();
+		}
+		function removeListItem(name) {
+			var list = document.getElementById('tabs');
+			var child = document.getElementById(name);
+			list.removeChild(child);
+			updateTab();
+		}
+		function updateTab() {
+			if(currentTab === "") {
+				currentTab = document.getElementById('tabs').firstChild.textContent;
+			}
+			app.getTab(currentTab);
+		}
+		function textToIDE() {
+			var text = document.getElementById("textbox").value;
+			document.getElementById("textbox").value = "";
+			app.textInput(text);
+		}
+		</script>
+		<style type="text/css">
+		
+		body{
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			height: 100%; 
+			max-height: 100%; 
+			font-family:Sans-serif;
+			line-height: 1.5em;
+		}
+		
+		#nav{
+			position: absolute;
+			top: 0;
+			bottom: 0; 
+			left: 0;
+			width: 230px;
+			height: 100%;
+			overflow: hidden;
+			background: #eee;
+		}
+		
+		.navbar-brand {
+			height: 50px;
+		}
+		
+		main{
+			position: fixed;
+			top: 0; 
+			left: 230px;
+			right: 0;
+			bottom: 0;
+			overflow: auto; 
+			background: #fff;
+		}
+		
+		.innertube{
+			margin: 15px;
+		}
+		
+		p {
+			color: #555;
+		}
+
+		nav ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		
+		nav ul a {
+			color: darkgreen;
+			text-decoration: none;
+		}		
+		</style>
+	</head>
+	<body>
+		<main>
+			<div class="innertube">
+				
+				<h1><span id="name">Name</span></h1>
+				<div id='text'>
+				words written:<span id="words">3</span><br/>
+				lines in tab:<span id="lines">3</span>
+				</div>
+				<div>
+				  <input type="textbox" value="Send to IDE" id="textbox"></input>
+				  <input type="button" value="Send" onclick="textToIDE();" />
+				</div>
+				<input type="button" value="Refresh" onclick="updateTab();" />
+				
+			</div>
+		</main>
+	
+		<nav id="nav">
+			<div class="innertube">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="https://ioio.mah.se/" title="IOIO" rel="home">
+						<img src="logo.png">
+					</a>
+				</div>
+			<!--h3>Tabs</h3-->
+			<ul id="tabs">
+			</ul>
+			</div>
+		</nav>
+	
+	</body>
+</html>
