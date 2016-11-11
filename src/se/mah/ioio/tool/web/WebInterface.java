@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import processing.app.Base;
 import processing.app.tools.Tool;
 import processing.app.ui.Editor;
+import processing.app.Messages;
 import se.mah.ioio.tool.web.WebInterface;
 
 /*
@@ -238,6 +239,29 @@ class Browser extends Region {
 					//XXX: send the information back to the Javascript
 					webEngine.executeScript("changeTab('"+name+"','"+words+"','"+lines+"')");
 		}
+		
+		public void generateSwitch(String switchCountTxt, String varName) {		
+			System.out.println(switchCountTxt); 
+			int switchCount = Integer.parseInt(switchCountTxt);
+			System.out.println(switchCount);
+			 
+			if(switchCount > 0) {
+				String newSwitch = "switch (int " + varName + ") {\n";
+				for(int i = 0; i < switchCount; i++) {
+					newSwitch += "\tcase " + i + ":\n";
+					newSwitch += "\t\t // Some code goes here\n";
+					newSwitch += "\t\tbreak;\n";
+				}
+				newSwitch += "\tdefault:\n";
+				newSwitch += "\t\t // Some code goes here\n";
+				newSwitch += "\t\tbreak;\n";
+				newSwitch += "}";
+				 
+				editor.insertText(newSwitch);
+			}
+			
+			webEngine.executeScript("confirmReception()");
+		 }
 	}
 	
     private Node createSpacer() {

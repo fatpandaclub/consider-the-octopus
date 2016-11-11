@@ -35,7 +35,7 @@ import processing.app.ui.Editor;
 import se.mah.ioio.tool.web.WebInterface;
 
 
-public class HTML5tool implements Tool {
+public class TheOctopusToolkit implements Tool {
 	private WebInterface web;
 	private Editor editor;
 	  Base base;
