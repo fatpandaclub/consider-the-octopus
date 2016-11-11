@@ -34,7 +34,6 @@ import processing.app.Base;
 import processing.app.tools.Tool;
 import processing.app.ui.Editor;
 import processing.app.Messages;
-import se.mah.ioio.tool.web.WebInterface;
 
 /*
  * This class is an interface for web processing via JavaFX.
@@ -240,27 +239,30 @@ class Browser extends Region {
 					webEngine.executeScript("changeTab('"+name+"','"+words+"','"+lines+"')");
 		}
 		
-		public void generateSwitch(String switchCountTxt, String varName) {		
-			System.out.println(switchCountTxt); 
-			int switchCount = Integer.parseInt(switchCountTxt);
-			System.out.println(switchCount);
-			 
-			if(switchCount > 0) {
-				String newSwitch = "switch (int " + varName + ") {\n";
-				for(int i = 0; i < switchCount; i++) {
-					newSwitch += "\tcase " + i + ":\n";
-					newSwitch += "\t\t // Some code goes here\n";
-					newSwitch += "\t\tbreak;\n";
-				}
-				newSwitch += "\tdefault:\n";
-				newSwitch += "\t\t // Some code goes here\n";
-				newSwitch += "\t\tbreak;\n";
-				newSwitch += "}";
-				 
-				editor.insertText(newSwitch);
-			}
+		public void generateSwitch(String switchCountTxt, String varName) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override public void run() {
 			
-			webEngine.executeScript("confirmReception()");
+					int switchCount = Integer.parseInt(switchCountTxt);
+					 
+					if(switchCount > 0) {
+						String newSwitch = "switch (int " + varName + ") {\n";
+						for(int i = 0; i < switchCount; i++) {
+							newSwitch += "\tcase " + i + ":\n";
+							newSwitch += "\t\t // Some code goes here\n";
+							newSwitch += "\t\tbreak;\n";
+						}
+						newSwitch += "\tdefault:\n";
+						newSwitch += "\t\t // Some code goes here\n";
+						newSwitch += "\t\tbreak;\n";
+						newSwitch += "}";
+						 
+						editor.insertText(newSwitch);
+					}
+					
+					webEngine.executeScript("confirmReception()");
+				}
+			});
 		 }
 	}
 	

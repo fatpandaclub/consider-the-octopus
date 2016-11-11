@@ -38,7 +38,7 @@ import se.mah.ioio.tool.web.WebInterface;
 public class TheOctopusToolkit implements Tool {
 	private WebInterface web;
 	private Editor editor;
-	  Base base;
+	Base base;
 	
 	public void init(Editor theEditor) {
 		editor = theEditor;
