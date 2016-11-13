@@ -278,7 +278,12 @@ class Browser extends Region {
 			});
 		}
 
-		public void disableCode(String labelWanted, String dateWanted, String reasonAdded) {
+		public void disableCode(Boolean labelWanted, Boolean dateWanted, String reasonAdded) {
+			
+			System.out.println(labelWanted);
+			System.out.println(dateWanted);
+			System.out.println(reasonAdded);
+			
 			String finalOutput = "";
 			String timeStamp = new SimpleDateFormat("EEE, d MMM yyyy 'at' HH:mm:ss").format(new Date());
 			if (editor.isSelectionActive()) {
@@ -287,10 +292,10 @@ class Browser extends Region {
 				// Append label and comment marks before the code that need to
 				// be disabled, end by closing comment
 				
-				if(labelWanted == "Yes"){
+				if(labelWanted){
 					finalOutput += "/************************************\n";
 					
-					if(dateWanted == "Yes"){
+					if(dateWanted){
 						finalOutput += "DISABLED:\t" + timeStamp + "\n";
 					}
 					

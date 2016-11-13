@@ -160,3 +160,9 @@ textarea:focus, input:focus {
 .return-container {
     display: none;
 }
+
+/* CODE DISABLER */
+
+.label-container{
+	display:none; 
+}
