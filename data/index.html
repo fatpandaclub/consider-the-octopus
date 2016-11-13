@@ -40,6 +40,17 @@
             
             <article class="tool-container" data-name="outcomment">
                 <h1>Comment</h1>
+                <input type="checkbox" id="activate-label" ><span>Add a label to my comment</span>
+                  
+                    <div class="label-container">
+                    	<input type="checkbox" id="time-stamp" ><span>Add a time stamp to my label</span>
+                        <label>Reason for disabling code (optional)</label>
+                        <textarea id="comment-description" placeholder="Why was this code disabled?"></textarea>
+					</div>
+                    <button class="submit" id="comment-submit">Generate comments</button>
+                    
+                    <p class="error-text" id="comment-error"></p>
+                
             </article>
             
             <article class="tool-container" data-name="documentation">

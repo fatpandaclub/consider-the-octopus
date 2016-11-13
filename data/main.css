@@ -128,3 +128,9 @@ textarea {
 .return-container {
     display: none;
 }
+
+/* CODE DISABLER */
+
+.label-container{
+	display:none; 
+}
