@@ -7,39 +7,45 @@ body {
     padding: 0;
 
     font-family: 'Helvetica', sans-serif;
+    background-color: whitesmoke;
 }
 
-nav {
-    width: 80%;
-    text-align: center;
-    margin: 0 auto;
+.sidebar {
+    width: 30%;
     display: block;
     clear: both;
-    height: 64px;
+    height: 100vh;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    background-color: darkslategray;
+    padding: 2rem 0;
+    color: #fff;
+}
+
+.sidebar h1 {
+    padding: 1rem 2rem;
+    margin: 0;
+
 }
 
 .navigation-item {
-    width: 30%;
-    float: left;
-    margin-top: 1rem;
-    background-color: tomato;
+    display: block;
     color: #fff;
-    padding: 0.5rem;
     cursor: pointer;
-    font-size: 12px;
-    margin-right: 5%;
-}
-
-.navigation-item:last-of-type {
-    margin-right: 0;
+    font-size: 14px;
+    letter-spacing: 1px;
+    vertical-align: middle;
+    padding: 1rem 2rem;
 }
 
 .navigation-item:hover {
-    background-color: blue;
+    background-color: slategray;
 }
 
 main {
-    padding: 1rem 2rem;
+    width: 70%;
+    margin-left: 30%;
+    padding: 2rem;
 }
 
 .tool-container {
@@ -48,6 +54,12 @@ main {
 
 .tool-container.shown {
     display: block;
+}
+
+.tool-container h1 {
+    color: darkslategray;
+    letter-spacing: 1px;
+    font-size: 26px;
 }
 
 label {
@@ -59,7 +71,7 @@ label {
 button {
     display: block;
     margin-top: 1rem;
-    background-color: tomato;
+    background-color: darkslategray;
     color: #fff;
     padding: 0.5rem 1rem;
     border: 0px;
@@ -68,6 +80,7 @@ button {
 
 button:hover {
     cursor: pointer;
+    background-color: slategray;
 }
 
 .error-text {
@@ -77,6 +90,13 @@ button:hover {
 
 .error-text.active {
     display: block;
+}
+
+input[type="text"], input[type="number"] {
+    background-color: whitesmoke;
+    border: 0px;
+    border-bottom: 1px solid darkslategray;
+    padding: 0.25rem;
 }
 
 textarea {
