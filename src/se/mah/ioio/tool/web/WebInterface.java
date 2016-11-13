@@ -1,5 +1,7 @@
 package se.mah.ioio.tool.web;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 import javax.swing.SwingUtilities;
@@ -48,7 +50,7 @@ public class WebInterface extends Application {
 	private Scene scene;
 	private Stage stage;
 	private Editor editor;
-	  Base base;
+	Base base;
 
 	public static WebInterface waitForInitialization(Editor edit) {
 		try {
@@ -77,12 +79,12 @@ public class WebInterface extends Application {
 		browser = new Browser(stage, editor);
 		scene = new Scene(browser, 960, 640, Color.web("#56DCF2"));
 		stage.setScene(scene);
-		scene.getStylesheets().add(this.getClass().getResource("/data/style.css").toExternalForm()); //XXX
+		scene.getStylesheets().add(this.getClass().getResource("/data/style.css").toExternalForm()); // XXX
 		stage.show();
 	}
 
 	public void showOrHide() {
-		if(stage.isShowing()) {
+		if (stage.isShowing()) {
 			stage.hide();
 		} else {
 			stage.show();
@@ -91,8 +93,8 @@ public class WebInterface extends Application {
 }
 
 /*
- * Our Browser class is a class for controlling the WebView from JavaFX.
- * It allows us to communicate with the web page we are viewing.
+ * Our Browser class is a class for controlling the WebView from JavaFX. It
+ * allows us to communicate with the web page we are viewing.
  */
 class Browser extends Region {
 	final protected Editor editor;
@@ -106,70 +108,71 @@ class Browser extends Region {
 
 	public Browser(Stage stage, Editor edit) {
 		getStyleClass().add("browser");
-		primaryStage = stage; //Save the stage reference
-		editor = edit; //Save the editor reference
+		primaryStage = stage; // Save the stage reference
+		editor = edit; // Save the editor reference
 		isLoaded = false;
-		
+
 		comboBox.setPrefWidth(60);
-		
-		//Set up toolbar
+
+		// Set up toolbar
 		toolBar = new HBox();
 		toolBar.setAlignment(Pos.CENTER);
 		toolBar.getStyleClass().add("browser-toolbar");
 		toolBar.getChildren().add(showPrevDoc);
-        toolBar.getChildren().add(comboBox);
-        toolBar.getChildren().add(createSpacer());
-        
+		toolBar.getChildren().add(comboBox);
+		toolBar.getChildren().add(createSpacer());
 
-        //Set up the previous docs button
-        showPrevDoc.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent t) {
-                webEngine.executeScript("window.history.back()");
-            }
-        });
-        
-        //process history
-        final WebHistory history = webEngine.getHistory();
-        history.getEntries().addListener(new 
-            ListChangeListener<WebHistory.Entry>(){
-                @Override public void onChanged(Change<? extends Entry> c) {
-                    c.next();
-                    for (Entry e : c.getRemoved()) {
-                        comboBox.getItems().remove(e.getUrl());
-                    }
-                    for (Entry e : c.getAddedSubList()) {
-                        comboBox.getItems().add(e.getUrl());
-                    }
-                }
-        });
- 
-        //set the behavior for the history combobox               
-        comboBox.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                int offset = comboBox.getSelectionModel().getSelectedIndex() - history.getCurrentIndex();
-                history.go(offset);
-            }
-        });
-        
-		//Set up the confirm handler
+		// Set up the previous docs button
+		showPrevDoc.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent t) {
+				webEngine.executeScript("window.history.back()");
+			}
+		});
+
+		// process history
+		final WebHistory history = webEngine.getHistory();
+		history.getEntries().addListener(new ListChangeListener<WebHistory.Entry>() {
+			@Override
+			public void onChanged(Change<? extends Entry> c) {
+				c.next();
+				for (Entry e : c.getRemoved()) {
+					comboBox.getItems().remove(e.getUrl());
+				}
+				for (Entry e : c.getAddedSubList()) {
+					comboBox.getItems().add(e.getUrl());
+				}
+			}
+		});
+
+		// set the behavior for the history combobox
+		comboBox.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent ev) {
+				int offset = comboBox.getSelectionModel().getSelectedIndex() - history.getCurrentIndex();
+				history.go(offset);
+			}
+		});
+
+		// Set up the confirm handler
 		webEngine.setConfirmHandler(new Confirm(primaryStage));
-		//Set up the alert handler.
+		// Set up the alert handler.
 		webEngine.setOnAlert(new Alert(primaryStage));
-		//Set up the popup handler.
+		// Set up the popup handler.
 		webEngine.setCreatePopupHandler(new Popup(primaryStage));
-		//Set up the visibility handler.
+		// Set up the visibility handler.
 		webEngine.setOnVisibilityChanged(new EventHandler<WebEvent<Boolean>>() {
-			@Override public void handle(WebEvent<Boolean> event) {
-				if(event.getData().booleanValue()) {
+			@Override
+			public void handle(WebEvent<Boolean> event) {
+				if (event.getData().booleanValue()) {
 					primaryStage.show();
 				} else {
 					primaryStage.hide();
 				}
 			}
 		});
-		
-		//Set up the load worker to change state of the program.
+
+		// Set up the load worker to change state of the program.
 		webEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
 			@Override
 			public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
@@ -186,69 +189,78 @@ class Browser extends Region {
 		webEngine.load(this.getClass().getResource("/data/jquery.min.js").toExternalForm());
 		webEngine.load(this.getClass().getResource("/data/main.js").toExternalForm());
 		webEngine.load(this.getClass().getResource("/data/index.html").toExternalForm());
-		//getChildren().add(toolBar); //XXX: this will add a toolbar to your browser
+		// getChildren().add(toolBar); //XXX: this will add a toolbar to your
+		// browser
 		getChildren().add(browser);
 	}
 
 	// JavaScript to Java interface
-	/* XXX: write here whatever functions you want to be calling from your Javascript
-	 * XXX: if you have in your Javascript something like "app.textInput(txt)" you need to have a
-	 * XXX: callback method in this class called "textInput" in order to capture the Javascript event
+	/*
+	 * XXX: write here whatever functions you want to be calling from your
+	 * Javascript XXX: if you have in your Javascript something like
+	 * "app.textInput(txt)" you need to have a XXX: callback method in this
+	 * class called "textInput" in order to capture the Javascript event
 	 */
-	public class JSToJava {		
-		
+	public class JSToJava {
+
 		WebEngine webEngine;
-		
+
 		JSToJava(WebEngine webEngine) {
 			this.webEngine = webEngine;
 		}
-		
-		//XXX: this first example is sending text from your Javascript application to the IDE
-		//XXX: uncomment the line you prefer to either erase everything or to append some text at bottom
+
+		// XXX: this first example is sending text from your Javascript
+		// application to the IDE
+		// XXX: uncomment the line you prefer to either erase everything or to
+		// append some text at bottom
 		public void textInput(final String txt) {
 			SwingUtilities.invokeLater(new Runnable() {
-				@Override public void run() {
-					//XXX: to erase and just add text
+				@Override
+				public void run() {
+					// XXX: to erase and just add text
 					editor.setText(txt);
-					
-					//XXX: to append text at the bottom
-					//editor.setText(editor.getSketch().getCode().toString()+"\n"+txt);
+
+					// XXX: to append text at the bottom
+					// editor.setText(editor.getSketch().getCode().toString()+"\n"+txt);
 				}
 			});
 		}
-		
-		//XXX: this second example is collecting some information about your code and sending it back to Javascript
+
+		// XXX: this second example is collecting some information about your
+		// code and sending it back to Javascript
 		public void getTab(final String txt) {
-			
-					//XXX: get the sketch name
-					String name = editor.getSketch().getName();
-					
-					//XXX: get the whole code in the window
-					String code = editor.getText();
-					
-					//XXX: split the code into an array using SPACE, TAB and EOL as separators
-					String[] symbols = code.split("\\s+");
-					
-					//XXX: get the amount of items in the array, a.k.a. the amount of words
-					int words = symbols.length;
-					
-					//XXX: get the amount of lines used in the editor
-					int lines = editor.getLineCount();
-					
-					//XXX: send the information back to the Javascript
-					webEngine.executeScript("changeTab('"+name+"','"+words+"','"+lines+"')");
+
+			// XXX: get the sketch name
+			String name = editor.getSketch().getName();
+
+			// XXX: get the whole code in the window
+			String code = editor.getText();
+
+			// XXX: split the code into an array using SPACE, TAB and EOL as
+			// separators
+			String[] symbols = code.split("\\s+");
+
+			// XXX: get the amount of items in the array, a.k.a. the amount of
+			// words
+			int words = symbols.length;
+
+			// XXX: get the amount of lines used in the editor
+			int lines = editor.getLineCount();
+
+			// XXX: send the information back to the Javascript
+			webEngine.executeScript("changeTab('" + name + "','" + words + "','" + lines + "')");
 		}
-		
+
 		public void generateSwitch(String switchCountTxt, String varName) {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-			
+
 					int switchCount = Integer.parseInt(switchCountTxt);
-					 
-					if(switchCount > 0) {
+
+					if (switchCount > 0) {
 						String newSwitch = "switch (int " + varName + ") {\n";
-						for(int i = 0; i < switchCount; i++) {
+						for (int i = 0; i < switchCount; i++) {
 							newSwitch += "\tcase " + i + ":\n";
 							newSwitch += "\t\t // Some code goes here\n";
 							newSwitch += "\t\tbreak;\n";
@@ -257,44 +269,97 @@ class Browser extends Region {
 						newSwitch += "\t\t // Some code goes here\n";
 						newSwitch += "\t\tbreak;\n";
 						newSwitch += "}";
-						 
+
 						editor.insertText(newSwitch);
 					}
-					
-					//webEngine.executeScript("confirmReception()");
-				}
-			});
-		 }
-		
-		public void insertDocumentation(String documentationText) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					editor.insertText(documentationText);
+
+					// webEngine.executeScript("confirmReception()");
 				}
 			});
 		}
+
+		public void disableCode(String labelWanted, String dateWanted, String reasonAdded) {
+			String finalOutput = "";
+			String timeStamp = new SimpleDateFormat("EEE, d MMM yyyy 'at' HH:mm:ss").format(new Date());
+			if (editor.isSelectionActive()) {
+				// Collect the code that needs to be disabled
+				String disableThis = editor.getSelectedText();
+				// Append label and comment marks before the code that need to
+				// be disabled, end by closing comment
+				
+				if(labelWanted == "Yes"){
+					finalOutput += "/************************************\n";
+					
+					if(dateWanted == "Yes"){
+						finalOutput += "DISABLED:\t" + timeStamp + "\n";
+					}
+					
+					if(reasonAdded.length() >= 1){
+						finalOutput += "REASON:\t\t" + reasonAdded + "\n";
+					}
+					finalOutput += "************************************/\n\n;";	
+				}
+				
+				
+				finalOutput += "/*\n" + disableThis + "\n*/";
+				
+				//disableThis = "/************************************\n" + "DISABLED:\t" + timeStamp + "\n"
+				//		+ "REASON:\t\tn/a \n" + "************************************/\n\n /*\n" + disableThis + "\n*/";
+				// Replace selected code
+				editor.setText(finalOutput);
+
+				// Make sure tool description is always shown once at the first
+				// use of tool, regardless of successful disabling of code
+
+				// On successful disabling of code, print a notification to the
+				// console
+				System.out.println("Success! The selected text is now a comment.");
+
+			
+			/*else {
+				// Alert user that no text was selected, which is needed for the
+				// tool to work
+				Messages.showMessage("ERROR: No text selected",
+						"Select text to comment out, and apply tool to execute.");
+				// Make sure tool description is always shown once at the first
+				// use of tool, regardless of successful disabling of code 
+			} */
+		}
 	}
-	
-    private Node createSpacer() {
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-        return spacer;
-    }
 
-    @Override protected void layoutChildren() {
-        double w = getWidth();
-        double h = getHeight();
-        double tbHeight = toolBar.prefHeight(w);
-        layoutInArea(browser,0,tbHeight,w,h,0,HPos.CENTER,VPos.CENTER);
-        layoutInArea(toolBar,0,0,w,tbHeight,0,HPos.CENTER,VPos.CENTER);
-    }
+	public void insertDocumentation(String documentationText) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				editor.insertText(documentationText);
+			}
+		});
+	}
 
-	@Override protected double computePrefWidth(double height) {
+	}
+
+	private Node createSpacer() {
+		Region spacer = new Region();
+		HBox.setHgrow(spacer, Priority.ALWAYS);
+		return spacer;
+	}
+
+	@Override
+	protected void layoutChildren() {
+		double w = getWidth();
+		double h = getHeight();
+		double tbHeight = toolBar.prefHeight(w);
+		layoutInArea(browser, 0, tbHeight, w, h, 0, HPos.CENTER, VPos.CENTER);
+		layoutInArea(toolBar, 0, 0, w, tbHeight, 0, HPos.CENTER, VPos.CENTER);
+	}
+
+	@Override
+	protected double computePrefWidth(double height) {
 		return 960;
 	}
 
-	@Override protected double computePrefHeight(double width) {
+	@Override
+	protected double computePrefHeight(double width) {
 		return 640;
 	}
 }
