@@ -10,8 +10,8 @@
     </head>
     <body>
         <div class="sidebar">
-            <h1>The Octupus Toolkit 🐙</h1>
-            <div class="navigation-item" id="switch">
+            <h1>The Octupus Toolkit <img class="octopus" src="octopus.png" alt=""></h1>
+            <div class="navigation-item current-menu-item" id="switch">
                 Switch generator
             </div>
             <div class="navigation-item" id="outcomment">
@@ -19,6 +19,10 @@
             </div>
             <div class="navigation-item" id="documentation">
                 Documentation generator
+            </div>
+
+            <div class="credits">
+                A Processing tool by Victor, Jesper and Nina
             </div>
         </div>
         <main>
@@ -62,7 +66,6 @@
                     <input type="checkbox" id="return-parameter" name="return-parameter"><span class="return-parameter-text">Returns something</span>
                     
                     <div class="return-container">
-                        <label>Return</label>
                         <textarea id="return-description" placeholder="Return description"></textarea>
                     </div>
 

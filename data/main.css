@@ -25,7 +25,13 @@ body {
 .sidebar h1 {
     padding: 1rem 2rem;
     margin: 0;
+}
 
+.octopus {
+    height: 2rem;
+    width: auto;
+    vertical-align: middle;
+    margin-bottom: 4px;
 }
 
 .navigation-item {
@@ -38,14 +44,26 @@ body {
     padding: 1rem 2rem;
 }
 
+.navigation-item.current-menu-item {
+    font-weight: 700;
+}
+
 .navigation-item:hover {
-    background-color: slategray;
+    background-color: #476969;
+}
+
+.credits {
+    position: absolute;
+    bottom: 1rem;
+    left: 2rem;
+
+    font-size: 10px;
 }
 
 main {
     width: 70%;
     margin-left: 30%;
-    padding: 2rem;
+    padding: 2rem 4rem;
 }
 
 .tool-container {
@@ -60,12 +78,7 @@ main {
     color: darkslategray;
     letter-spacing: 1px;
     font-size: 26px;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.25rem;
-    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 button {
@@ -80,11 +93,12 @@ button {
 
 button:hover {
     cursor: pointer;
-    background-color: slategray;
+    background-color: #9A3C4A;
 }
 
 .error-text {
-    color: tomato;
+    color: #9A3C4A;
+    font-size: 12px;
     display: none;
 }
 
@@ -92,18 +106,33 @@ button:hover {
     display: block;
 }
 
-input[type="text"], input[type="number"] {
-    background-color: whitesmoke;
+label {
+    display: block;
+    margin-bottom: 0.25rem;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: #5d5d5d;
+    font-weight: 700;
+}
+
+input[type="text"], input[type="number"], textarea {
+    background-color: #eee;
     border: 0px;
     border-bottom: 1px solid darkslategray;
-    padding: 0.25rem;
+    padding: 0.5rem 0.25rem;
 }
 
 textarea {
     width: 220px;
     height: 50px;
-    border-radius: 2px;
-    border: 1px solid lightgray;
+    border: 0px;
+    border-bottom: 1px solid darkslategray;
+    resize: none;
+}
+
+textarea:focus, input:focus {
+    outline: none;
 }
 
 /* DOCUMENTATION GENERATOR */
@@ -114,15 +143,18 @@ textarea {
 
 .add-parameter {
     cursor: pointer;
-    font-size: 12px;
+    font-size: 10px;
     padding: 0.25rem 0.5rem;
     background-color: #bbb;
     margin-bottom: 2rem;
 }
 
 .return-parameter-text {
-    font-size: 12px;
     margin-left: 0.25rem;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: #5d5d5d;
+    font-weight: 700;
 }
 
 .return-container {
