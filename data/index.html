@@ -6,7 +6,7 @@
 
         <link href="main.css" rel="stylesheet">
         <script src="jquery.min.js"></script>
-		<script src="main.js"></script>
+        <script src="main.js"></script>
     </head>
     <body>
         <nav>
@@ -25,7 +25,7 @@
                 <h1>Switch generator tool</h1>
 
                 <div class="tool-options">
-                	<label for="name-of-variable">Variable name</label>
+                    <label for="name-of-variable">Variable name</label>
                     <input type="text" id="name-of-variable" name="name-of-variable" placeholder="varName">
                 
                     <label for="no-of-cases">Number of cases</label>
@@ -33,7 +33,7 @@
 
                     <button class="submit" id="switch-submit">Create</button>
                     
-                    <p id="error-text"></p>
+                    <p class="error-text" id="switch-error"></p>
                 </div>
             </article>
             
@@ -42,7 +42,33 @@
             </article>
             
             <article class="tool-container" data-name="documentation">
-                <h1>Documentation</h1>
+                <h1>Documentation Generator</h1>
+                
+                <div class="tool-options">
+                    <label for="name-of-variable">Description</label>
+                    <textarea id="documentation-description" name="documentation-description" placeholder="Method description"></textarea>
+                
+                    <label>Parameters</label>
+                    <div class="parameter-container">
+                        <div class="parameter-item">
+                            <input type="text" id="parameter-name" placeholder="Variable name">
+                            <input type="text" id="parameter-description" placeholder="Parameter description">
+                        </div>
+                    </div>
+                    
+                    <button class="add-parameter">+ Add a parameter</button>
+                    
+                    <input type="checkbox" id="return-parameter" name="return-parameter"><span class="return-parameter-text">Returns something</span>
+                    
+                    <div class="return-container">
+                        <label>Return</label>
+                        <textarea id="return-description" placeholder="Return description"></textarea>
+                    </div>
+
+                    <button class="submit" id="documentation-submit">Create documentation</button>
+                    
+                    <p class="error-text" id="documentation-error"></p>
+                </div>
             </article>
         </main>
     </body>

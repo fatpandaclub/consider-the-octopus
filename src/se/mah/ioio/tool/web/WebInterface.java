@@ -241,7 +241,8 @@ class Browser extends Region {
 		
 		public void generateSwitch(String switchCountTxt, String varName) {
 			SwingUtilities.invokeLater(new Runnable() {
-				@Override public void run() {
+				@Override
+				public void run() {
 			
 					int switchCount = Integer.parseInt(switchCountTxt);
 					 
@@ -260,10 +261,19 @@ class Browser extends Region {
 						editor.insertText(newSwitch);
 					}
 					
-					webEngine.executeScript("confirmReception()");
+					//webEngine.executeScript("confirmReception()");
 				}
 			});
 		 }
+		
+		public void insertDocumentation(String documentationText) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					editor.insertText(documentationText);
+				}
+			});
+		}
 	}
 	
     private Node createSpacer() {

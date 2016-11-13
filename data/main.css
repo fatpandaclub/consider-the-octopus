@@ -43,22 +43,22 @@ main {
 }
 
 .tool-container {
-	display: none;
+    display: none;
 }
 
 .tool-container.shown {
-	display: block;
+    display: block;
 }
 
 label {
     display: block;
-    font-size: 11px;
     margin-bottom: 0.25rem;
+    margin-top: 1rem;
 }
 
 button {
     display: block;
-    margin-top: 2rem;
+    margin-top: 1rem;
     background-color: tomato;
     color: #fff;
     padding: 0.5rem 1rem;
@@ -70,11 +70,41 @@ button:hover {
     cursor: pointer;
 }
 
-#error-text {
-	color: tomato;
-	display: none;
+.error-text {
+    color: tomato;
+    display: none;
 }
 
-#error-text.active {
-	display: block;
+.error-text.active {
+    display: block;
+}
+
+textarea {
+    width: 220px;
+    height: 50px;
+    border-radius: 2px;
+    border: 1px solid lightgray;
+}
+
+/* DOCUMENTATION GENERATOR */
+
+.parameter-item {
+    margin-bottom: 0.5rem;
+}
+
+.add-parameter {
+    cursor: pointer;
+    font-size: 12px;
+    padding: 0.25rem 0.5rem;
+    background-color: #bbb;
+    margin-bottom: 2rem;
+}
+
+.return-parameter-text {
+    font-size: 12px;
+    margin-left: 0.25rem;
+}
+
+.return-container {
+    display: none;
 }
