@@ -1,9 +1,11 @@
 $(document).ready(function() {
 	$('.navigation-item').on('click', function() {
-		var navId = $(this).attr('id');
-		$('.shown').removeClass('shown');
-		$('.tool-container[data-name=' + navId + ']').addClass('shown');
-	});
+        $('.current-menu-item').removeClass('current-menu-item');
+        $(this).addClass('current-menu-item');
+        var navId = $(this).attr('id');
+        $('.shown').removeClass('shown');
+        $('.tool-container[data-name=' + navId + ']').addClass('shown');
+    });
 
 	$('#switch-submit').on('click', function() {
 		createSwitch();
